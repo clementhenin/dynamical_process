@@ -57,27 +57,25 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 \end{align*}
 \end{block}
 
+\pause
+
 \begin{itemize}
 \itemsep1em
-\item Mass action law equation: $\frac{d[C]}{dt} = - k_{off}[C] + k_{on}[A][B] $ 
+\item Mass action law equation: $\frac{d[C]}{dt} = - k_{off}[C] + k_{on}[L][R] $ 
+\pause
 \item We work in the case $[L] \gg [R]$
-\item Converges to an equilibrium in the homogeneous phases
+\item Mass action law solution converges to $[C]_{eq} = \frac{[L]_0 [R]_0}{[L]_0 + \frac{k_{off}}{k_{on}}}$ 
 \end{itemize}
-
-%TODO : put here a picture of the time evolution of $[C]$ in the system
-
-
 \end{frame}
 
 \begin{frame}{Anomalous diffusion}
 
 \begin{figure}
-\caption{Figure 1 du papier}
+%TODO : put here the image from 
+\caption{Anomalous diffusion for short time, converges to Brownian motion at long times}
 \end{figure}
 
 \end{frame}
-
-
 
 
 \section{Three Models}
@@ -86,7 +84,7 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 Présentation de la grille et des movings particles
 + 
 Présentation du patch (avec un petit schéma)
-\begin{block}{Model}
+\begin{block}{}
 \begin{itemize}
 \itemsep1em
 \item Particles moving on a $2D$ grid
@@ -180,48 +178,54 @@ $$
 %Value at equilibrium does not depend on D
 
 \begin{figure}
-%TODO : put here the time evolution for browninan motion for different D
-\caption{Time evolution of the number of $C$ for different value of $D$. Patch size$=100\%$}
+\includegraphics[width=\textwidth]{C_Dvar}
+\caption{Time evolution of the number of $C$ for different value of $D$. Patch size$=100\%$. Equilibrium is independant of $D$}
 \end{figure}
-Value at equilibrium does not depend on $D$.
 \end{frame}
 
 \begin{frame}
 {Time evolution of C: Brownian model}
 \begin{figure}
-%TODO : put here the time evolution for browninan motion for different rho
+\includegraphics[width=\textwidth]{C_rhovar}
 \caption{Time evolution of the number of $C$ for different value of $\rho$. Patch size$=100\%$}
 \end{figure}
 \end{frame}
 
 
-\begin{frame}{Time evolution of C: CTRW model}
-
-\begin{figure}
-%TODO : put here the time evolution for browninan motion for different alpha and tau
-\caption{Time evolution of the number of $C$ for different values of $\tau_c$ and $\alpha$}
-\end{figure}
-\end{frame}
-
 \begin{frame}
 \begin{figure}
 %Figure for browninan motion with obstacles
-\caption{Equilibrium value as a function of $D$}
-\end{figure}
-\end{frame}
-
-
-
-\begin{frame}
-\begin{figure}
-%Figure for browninan motion with obstacles
+\includegraphics[width=\textwidth]{Ceq_rhovar}
 \caption{Equilibrium value as a function of $\rho$}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 %Show the four graphics from the article
+\begin{figure}
+\includegraphics[width=.5\textwidth]{Ceq_D0var}
+\includegraphics[width=.5\textwidth]{Ceq_phivar}
+\caption{Comparing theoretical estimate with values from the experiments}
+\end{figure}
 \end{frame}
+
+\begin{frame}
+\begin{figure}
+\includegraphics[width=\textwidth]{2Dplots}
+\caption{Equilibrium constant depending on the type of patch, and its size}
+\end{figure}
+\end{frame}
+
+
+%TODO : eventually put here other plots for the CTRW model
+
+\begin{frame}{Time evolution of C: CTRW model}
+\begin{figure}
+\includegraphics[width=\textwidth]{CTRW}
+\caption{Time evolution of the number of $C$ for different values of $\tau_c$ and $\alpha$}
+\end{figure}
+\end{frame}
+
 
 \begin{frame}{Conclusion}
 % Study of different diffusion model
@@ -232,8 +236,8 @@ Value at equilibrium does not depend on $D$.
 \itemsep2em
 \item Study different diffusion models
 \item Attempt to model influence of anomalous diffusion on reaction
+\item Influence of the model on equilibrium
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
