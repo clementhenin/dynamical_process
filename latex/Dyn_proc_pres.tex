@@ -8,8 +8,7 @@
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 \usepackage{amsmath}
-%\usepackage{pgfplots}
-%\usepackage{svg}
+\usepackage{mathtools}
 
 \usetheme{Madrid}
 
@@ -41,6 +40,33 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 \frametitle{Introduction}
 %Justification of the study: 
 	% Anomalous diffusion in molecules
+	
+\begin{itemize}
+\itemsep2em
+\item Study of protein motion in cells show anomalous behaviour
+\item At long times, it converges to Brownian motion with reduced diffusion coefficient
+\item Study models for the movement of proteins in particles
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ligand Binding equation}
+\begin{block}{Equation}
+
+\begin{align*}
+\mathrm{L+R} \xrightleftharpoons[k_{on}]{k_{off}} \mathrm{C}
+\end{align*}
+\end{block}
+
+\begin{itemize}
+\itemsep1em
+\item Mass action law equation: $\frac{d[C]}{dt} = - k_{off}[C] + k_{on}[A][B] $ 
+\item We work in the case $[L] \gg [R]$
+\item Converges to an equilibrium.
+\end{itemize}
+
+%TODO : put here a picture of the time evolution of $[C]$ in the system
+
+
 \end{frame}
 
 \section{Two Models}
@@ -48,14 +74,35 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 \begin{frame}{Brownian motion with obstacles}
 % Put the definition here
 % General behaviour : brownian motion at small and large time scales
+\begin{block}{Model}
+\begin{itemize}
+\itemsep1em
+\item Particles moving on a $2D$ grid
+\item At each time step a particle has a probability of leaving $p_{move}(i,j)$
+\item $2$ zones: central patch area, and the rest of the grid
+\item Obstacles in the patch with probability $\rho$
+\item Diffusion coefficients: $D_{patch}$, $D_{ext}$
+\end{itemize}
+\end{block}
+
+\begin{align*}
+p_{move} = \frac{4 \Delta t}{(\Delta x)^2} D(i,j)
+\end{align*}
+
+
 \end{frame}
 
 \begin{frame}
-%Put the short movie here
+\begin{center}
+\Huge \color{blue} Example
+\end{center}
 \end{frame}
 
 \begin{frame}{CTRW}
 % Definition + general behaviour (mean square deviation)
+\begin{block}{Model}
+
+\end{block}
 \end{frame}
 
 \begin{frame}
@@ -88,7 +135,13 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 \end{frame}
 
 \begin{frame}
+%Show the two graphics from the article ()
+\end{frame}
 
+\begin{frame}{Conclusion}
+% Study of different diffusion model
+% Attempt to model anomalous diffusion in cells
+% Study the influence of this anomalous diffusion on reactions, and equilibrium of these reactions
 \end{frame}
 
 
