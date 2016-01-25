@@ -89,6 +89,8 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 p_{move} = \frac{4 \Delta t}{(\Delta x)^2} D(i,j)
 \end{align*}
 
+Percolation threshold : $\rho \approx 407253949$
+
 
 \end{frame}
 
@@ -101,48 +103,106 @@ p_{move} = \frac{4 \Delta t}{(\Delta x)^2} D(i,j)
 \begin{frame}{CTRW}
 % Definition + general behaviour (mean square deviation)
 \begin{block}{Model}
-
+Residence time of a particle in the grid given by power law with cut-off: 
+$$ \phi(\tau) \propto \alpha \tau^{-(1+\alpha)} \mathbf{1}_{\tau < \tau_c}$$
 \end{block}
+%TODO : draw a graph of the distribution?
+%Put figure 1 B here
+
 \end{frame}
 
-\begin{frame}
-% Problem studied : Ligand binding equation
-% Put the equation
-% Say a word why it is important
-\end{frame}
-
-\begin{frame}
-%Time evolution of number of C for the brownian model
-% For several values of D
-%Value at equilibrium does not depend on D
-\end{frame}
-
-\begin{frame}
-% Same with several values of rho
-% Modification in the value at equilibrium
-\end{frame}
 
 \section{Simulations}
 
-\begin{frame}
-%Graph of equilibrium value as a function of $D$
+\begin{frame}{Parameters}
+$$
+\begin{array}{|c|c|}
+\hline
+Parameter & value \\
+\hline
+\Delta t & 1 \\
+\Delta x & 2 \\
+\text{grid size} & 800 \times 800 \\
+n_A & 100 \\
+n_B & 4500 \\
+\hline
+D_{patch} & [0.01, 1] \\
+D_{ext} & 1 \\
+\rho & [0, 0.4] \\
+\hline
+\alpha & [0,1] \\
+\tau_c & [10^1, 10^6] \\
+\hline
+\end{array}
+$$
+\end{frame}
+
+\begin{frame}{Time evolution of C: Brownian model}
+%Time evolution of number of C for the brownian model
+% For several values of D
+%Value at equilibrium does not depend on D
+
+\begin{figure}
+%TODO : put here the time evolution for browninan motion for different D
+\caption{Time evolution of the number of $C$ for different value of $D$. Patch size$=100\%$}
+\end{figure}
+Value at equilibrium does not depend on $D$.
 \end{frame}
 
 \begin{frame}
-%Graph of equilibrium value as a function of rho
-%Good fit for low values rho
-% Less good when we get close to percolation threshold
+{Time evolution of C: Brownian model}
+\begin{figure}
+%TODO : put here the time evolution for browninan motion for different rho
+\caption{Time evolution of the number of $C$ for different value of $\rho$. Patch size$=100\%$}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Time evolution of C: CTRW model}
+
+\begin{figure}
+%TODO : put here the time evolution for browninan motion for different alpha and tau
+\caption{Time evolution of the number of $C$ for different values of $\tau_c$ and $\alpha$}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-%Show the two graphics from the article ()
+\begin{figure}
+%Figure for browninan motion with obstacles
+\caption{Equilibrium value as a function of $D$}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}
+\begin{figure}
+%Figure for browninan motion with obstacles
+\caption{Equilibrium value as a function of $\rho$}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+%Show the four graphics from the article
 \end{frame}
 
 \begin{frame}{Conclusion}
 % Study of different diffusion model
 % Attempt to model anomalous diffusion in cells
 % Study the influence of this anomalous diffusion on reactions, and equilibrium of these reactions
+
+\begin{itemize}
+\itemsep2em
+\item Study different diffusion models
+\item Attempt to model influence of anomalous diffusion on reaction
+\end{itemize}
+
 \end{frame}
 
+\begin{frame}
+\begin{center}
+\Huge \color{blue} Thank you!
+\end{center}
+\end{frame}
 
 \end{document}
