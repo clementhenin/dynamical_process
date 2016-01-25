@@ -6,6 +6,7 @@ from scipy.stats import pareto
 import os
 import pandas as pd
 
+
 def small_movie(simulation, nbr_steps):
     for i in range(nbr_steps):
         simulation.brownian_motion(1)
@@ -26,16 +27,32 @@ def time_evolution_MSD(simulation, simu_param, nbr_steps):
     delta_t = 100
     cell = simulation(**simu_param)
     L_init = dict(cell.L)
-    evolution = {}
+    evolution = pd.DataFrame({"R2": []})
     for t in range(nbr_steps):
-        cell.brownian_motion(delta_t, cell.obst_list)
+        cell.brownian_motion(delta_t)
         R2 = np.mean([(L_init[mol][0] - cell.L[mol][0])**2 +
                       (L_init[mol][1] - cell.L[mol][1])**2
                       for mol in cell.L.keys()])
-        evolution[t * delta_t] = R2
+        evolution.loc[t * delta_t] = R2
         if t % (nbr_steps / 100.) == 0:
             print (float(t) / nbr_steps) * 100, " % have been done."
-    return evolution
+    evolution.to_csv("MSD_obstacles/data_2.csv")
+
+
+def time_evolution_MSD_CTRW(simulation, simu_param, nbr_steps):
+    delta_t = 100
+    cell = simulation(**simu_param)
+    L_init = {i: cell.L[i]['coordinates'] for i in cell.L.keys()}
+    evolution = pd.DataFrame({"R2": []})
+    for t in range(nbr_steps):
+        cell.brownian_motion(delta_t)
+        R2 = np.mean([(L_init[mol][0] - cell.L[mol]['coordinates'][0])**2 +
+                      (L_init[mol][1] - cell.L[mol]['coordinates'][1])**2
+                      for mol in cell.L.keys()])
+        evolution.loc[t * delta_t] = R2
+        if t % (nbr_steps / 100.) == 0:
+            print (float(t) / nbr_steps) * 100, " % have been done."
+    evolution.to_csv("MSD_CTRW/data_3.csv")
 
 
 def brown_equilibrium_evolution(simulation, nbr_steps):
@@ -340,11 +357,11 @@ class CTRW(object):
             self.brownian_motion_one_step()
 
 
-BIG_PATCH = [[200, 200], [599, 599]]
-SMALL_PATCH = [[10, 10], [30, 30]]
+BIG_PATCH = [[0, 0], [799, 799]]
+SMALL_PATCH = [[0, 10], [30, 30]]
 VBIG_PATCH = [[0, 0], [4999, 4999]]
 
-OBSTACLE_LIST = gen_obst_list(0.35, SMALL_PATCH)
+OBSTACLE_LIST = gen_obst_list(0.35, BIG_PATCH)
 
 DISPLAY_PARAM = {'w': 800,
                  'l_tot': 300,
@@ -356,15 +373,15 @@ DISPLAY_PARAM = {'w': 800,
                  'D1': 1,
                  'obst_list': OBSTACLE_LIST}
 
-STANDARD_PARAM_CTRW = {'w': 800 * 2,
-                       'l_tot': 4500,
-                       'r_tot': 100 * 4,
+STANDARD_PARAM_CTRW = {'w': 800,
+                       'l_tot': 1500,
+                       'r_tot': 100,
                        'p_on': 0.1,
                        'p_off': 10**(-3),
-                       'patch': SMALL_PATCH,
+                       'patch': BIG_PATCH,
                        'D0': 1,
                        'alpha': 0.8,
-                       'tau_c': 5 * 10**4}
+                       'tau_c': 5 * 10**3}
 
 STANDARD_PARAM = {'w': 600,
                   'l_tot': 2500,
@@ -375,33 +392,69 @@ STANDARD_PARAM = {'w': 600,
                   'D0': 0.1,
                   'D1': 0.1}
 
-MSD_PARAM_OBSTACLES = {'w': 5000,
-                       'l_tot': 1000,
+MSD_PARAM_OBSTACLES = {'w': 800,
+                       'l_tot': 300,
                        'r_tot': 0,
                        'p_on': 0,
                        'p_off': 0,
-                       'patch': VBIG_PATCH,
-                       'D0': 0,
-                       'D1': 1}
+                       'patch': BIG_PATCH,
+                       'D0': 1,
+                       'D1': 1,
+                       'obst_list': OBSTACLE_LIST}
 
-MSD_PARAM_CTRW = {'w': 5000,
-                  'l_tot': 1000,
+MSD_PARAM_CTRW = {'w': 800,
+                  'l_tot': 300,
                   'r_tot': 0,
                   'p_on': 0,
                   'p_off': 0,
-                  'patch': VBIG_PATCH,
-                  'D0': 0,
-                  'alpha': None,
-                  'tau_c': None}
+                  'patch': BIG_PATCH,
+                  'D0': 1,
+                  'alpha': 0.8,
+                  'tau_c': 5 * 10**4}
+
 
 def big_simu(simulation, model_param):
-    for lt in [500]:
-        model_param["l_tot"] = lt
+    simu = simulation(**model_param)
+    C_t, L_t, R_t = brown_equilibrium_evolution(simu, 10**6)
+    data = pd.DataFrame({'C': C_t, 'L': L_t, 'R': R_t})
+    data.to_csv("long_time_study/data.csv")
+
+
+def big_simu_CTRW(simulation, model_param):
+    for tau in [50, 200, 800, 1600, 3200, 6400, 128000, 25600, 51200, 102400]:
+        model_param["tau_c"] = tau
         simu = simulation(**model_param)
-        C_t, L_t, R_t = brown_equilibrium_evolution(simu, 10**6)
+        C_t, L_t, R_t = brown_equilibrium_evolution(simu, 10**5)
         data = pd.DataFrame({'C': C_t, 'L': L_t, 'R': R_t})
-        data.to_csv("l_tot_simulation_1/data_" + str(lt) + ".csv")
-        print "Simulation with lt = " + str(lt) + " done"
+        data.to_csv("equilibrium_vs_tau/data_" + str(tau) + "_2.csv")
+        print "Simulation with tau_c = " + str(tau) + " done"
+
+
+def res_time_effects(simulation, model_param):
+    simu = simulation(**model_param)
+    data = pd.DataFrame({'tau_moy': [], "card_tau_<0": []})
+    for t in range(100000):
+        # pdb.set_trace()
+        R_mean = np.mean([val['res_time'] for val in simu.R.values()])
+        L_mean = np.mean([val['res_time'] for val in simu.L.values()])
+        C_mean = np.mean([val['res_time'] for val in simu.C.values()])
+        if np.isnan(R_mean):
+            R_mean = 0
+        if np.isnan(L_mean):
+            L_mean = 0
+        if np.isnan(C_mean):
+            C_mean = 0
+        tau_moy = 1 / 3. * (R_mean + L_mean + C_mean)
+        move_R = sum([val['res_time'] <= 0 for val in simu.R.values()])
+        move_L = sum([val['res_time'] <= 0 for val in simu.L.values()])
+        move_C = sum([val['res_time'] <= 0 for val in simu.C.values()])
+        move_tot = move_R + move_L + move_C
+        data.loc[t] = {'tau_moy': tau_moy, "card_tau_<0": move_tot}
+        simu.brownian_motion(1)
+        if t % (100000 / 100.) == 0:
+            print (float(t) / 100000) * 100, " % have been done. "
+    data.to_csv("res_time_study/res_time_simulation_tau=100000.csv")
+    return data
 
 # t1 = time.clock()
 # OBSTACLES_LIST = gen_obst_list(0.35, VBIG_PATCH)
