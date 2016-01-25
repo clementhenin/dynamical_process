@@ -49,7 +49,7 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Ligand Binding equation}
+\begin{frame}{Ligand Binding reaction}
 \begin{block}{Equation}
 
 \begin{align*}
@@ -61,7 +61,7 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 \itemsep1em
 \item Mass action law equation: $\frac{d[C]}{dt} = - k_{off}[C] + k_{on}[A][B] $ 
 \item We work in the case $[L] \gg [R]$
-\item Converges to an equilibrium.
+\item Converges to an equilibrium in the homogeneous phases
 \end{itemize}
 
 %TODO : put here a picture of the time evolution of $[C]$ in the system
@@ -69,18 +69,40 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 
 \end{frame}
 
-\section{Two Models}
+\begin{frame}{Anomalous diffusion}
 
-\begin{frame}{Brownian motion with obstacles}
-% Put the definition here
-% General behaviour : brownian motion at small and large time scales
+\begin{figure}
+\caption{Figure 1 du papier}
+\end{figure}
+
+\end{frame}
+
+
+
+
+\section{Three Models}
+
+\begin{frame}
+Présentation de la grille et des movings particles
++ 
+Présentation du patch (avec un petit schéma)
 \begin{block}{Model}
 \begin{itemize}
 \itemsep1em
 \item Particles moving on a $2D$ grid
 \item At each time step a particle has a probability of leaving $p_{move}(i,j)$
 \item $2$ zones: central patch area, and the rest of the grid
-\item Obstacles in the patch with probability $\rho$
+\item when L and R have the same coordinates then $p_{on}$ to react
+\item C have $p_{off}$ to decompose in L and R
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Brownian motion with two diffusion coefficients}
+\begin{block}{Model}
+\begin{itemize}
+\itemsep1em
 \item Diffusion coefficients: $D_{patch}$, $D_{ext}$
 \end{itemize}
 \end{block}
@@ -89,7 +111,22 @@ in the Ligand-Binding Equilibrium \\ H. Soula et. al.}
 p_{move} = \frac{4 \Delta t}{(\Delta x)^2} D(i,j)
 \end{align*}
 
-Percolation threshold : $\rho \approx 407253949$
+\end{frame}
+
+\begin{frame}{Brownian motion with immobile obstacles}
+% Put the definition here
+% General behaviour : brownian motion at small and large time scales
+\begin{block}{Model}
+\begin{itemize}
+\itemsep1em
+\item Obstacles in the patch with probability $\rho$
+\item exclude the lattice site they occupy
+\item when particule hits obstacle it comes back to its origin
+\end{itemize}
+\end{block}
+
+
+Percolation threshold : $\rho \approx 0.407253949$
 
 
 \end{frame}
